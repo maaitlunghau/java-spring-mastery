@@ -1,0 +1,15 @@
+- Java Spring (Spring) là một Framework mạnh mẽ của Java, dùng để xây dựng ứng dụng Web, API, Microservices hoặc hệ thống doanh nghiệp lớn
+
+- Spring giúp viết code Java ít hơn, dễ bảo trì hơn, an toàn và mở rộng hơn
+
+- Nguồn tài liệu: https://spring.io hoặc https://spring.io/why-spring (làm được gì với spring)
++ Generative AI (bề nổi thôi, không chuyên sâu bằng Python - top 1 server về AI)
++ Microservices (*): hỗ trợ tốt
++ Reactive: hỗ trợ nhiều luồng
++ Cloud (*)
++ Web Apps (*)
++ Event Driven: xử lý sự kiện
++ Serverless: không cần quản lý server
++ Batch: xử lý dữ liệu lớn
+
+- nhiều công ty và doanh nghiệp đang sử dụng công nghệ Java Spring (Spring Boot)
