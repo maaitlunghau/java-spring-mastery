@@ -12,13 +12,15 @@
 package vn.hoidanit.springsieutoc;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller // MVC
 public class HelloController {
 
 	@GetMapping("/template-engine")
-	public String testTemplateEngine() {
+	public String testTemplateEngine(Model model) {
+		model.addAttribute("name", "maaitlunghau");
 		return "hello.html";
 	}
 
