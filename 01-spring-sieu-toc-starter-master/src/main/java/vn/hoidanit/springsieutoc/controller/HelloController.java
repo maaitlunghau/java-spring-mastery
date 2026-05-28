@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import vn.hoidanit.springsieutoc.model.User;
@@ -81,6 +82,31 @@ public class HelloController {
 		createUser.setId(1);
 
 		List<User> userList = Arrays.asList(createUser);
+		model.addAttribute("users", userList);
+
+		return "/user/show";
+	}
+
+	@GetMapping("/user/{id}")
+	public String getUpdateUserPage(Model model, @PathVariable int id) {
+		List<User> userList = this._userService.fetchUsers();
+
+		User updateUser = userList.stream().filter(user -> user.getId() == id)
+				.findFirst().get();
+
+		System.out.println(updateUser);
+
+		model.addAttribute("user", updateUser);
+		model.addAttribute("id", id);
+
+		return "/user/update";
+	}
+
+	@PostMapping("/user/update")
+	public String postUpdatePage(@ModelAttribute User updateUser, Model model) {
+		updateUser.setId(1);
+
+		List<User> userList = Arrays.asList(updateUser);
 		model.addAttribute("users", userList);
 
 		return "/user/show";

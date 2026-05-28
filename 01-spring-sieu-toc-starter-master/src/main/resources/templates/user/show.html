@@ -18,22 +18,30 @@
             <a href="/user/create" class="btn btn-primary">Create Users</a>
         </div>
 
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" style="text-align: center;">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Address</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
-
                 <tr th:each="user, status : ${users}">
-                    <th th:text="${user.id}"></th>
+                    <th th:text="${user.id}" />
                     <td th:text="${user.name}" />
                     <td th:text="${user.email}" />
                     <td th:text="${user.address}" />
+                    <td>
+                        <a th:href="@{/user/{id}(id=${user.id})}" class="btn btn-warning">
+                            Update
+                        </a>
+                        <a href="" class="btn btn-danger">
+                            Delete
+                        </a>
+                    </td>
                 </tr>
 
             </tbody>
