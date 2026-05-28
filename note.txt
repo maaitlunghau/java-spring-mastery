@@ -74,3 +74,26 @@ NÓ CHỊU TRÁCH NHIỆM CHO CÁC TÁC VỤ:
 + Biên dịch (Compilation): dịch mã nguồn (Java, Kotlin) thành mã bytecode (mã máy tính hiểu)
 + Đóng gói ứng dụng (Packaging)
 + Chạy kiểm thử (Testing): unit tests
+
+
+2. Template Engine
+a. Thymeleaf (phổ biến nhất hiện tại cho Spring MVC)
+- Cấu hình trong file pom.xml:
+                                <dependency>
+                                    <groupId>org.springframework.boot</groupId>
+                                    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                                </dependency>
+- Đây gần như là “default choice” khi làm server-side rendering với Spring Boot.
+- Mặc định, Thymeleaf sẽ tìm các file template (HTML) trong thư mục: src/main/resources/templates
+
+b. JSP (legacy nhưng từng rất phổ biến)
+- Ngày xưa đây là chuẩn gần như mặc định của Java web.
+
+c. FreeMarker
+- Một template engine lâu đời và khá mạnh.
+
+d. Mustache
+- Template engine cực tối giản.
+
+e. Pebble
+- Template engine hiện đại kiểu giống Jinja2/Twig.
