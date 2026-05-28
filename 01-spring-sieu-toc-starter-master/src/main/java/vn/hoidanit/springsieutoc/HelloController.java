@@ -20,4 +20,9 @@ public class HelloController {
 	public String index() {
 		return "Hello World from Spring Boot - @hoidanit devtools";
 	}
+
+	@GetMapping("/dev")
+	public String maaitlunghau() {
+		return "Hello maaitlunghau";
+	}
 }
