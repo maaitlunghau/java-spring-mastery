@@ -6,9 +6,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import vn.hoidanit.springsieutoc.model.User;
+import vn.hoidanit.springsieutoc.repository.UserRepository;
 
 @Service
 public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public List<User> fetchUsers() {
         List<User> userList = Arrays.asList(new User(1, "Dependency Injection",
                 "a.nguyen@example.com", "Hà Nội"),
@@ -16,5 +24,9 @@ public class UserService {
                 new User(3, "Lê Văn C", "c.le@example.com", "Đà Nẵng"));
 
         return userList;
+    }
+
+    public void createUser(User user) {
+        this.userRepository.save(user);
     }
 }

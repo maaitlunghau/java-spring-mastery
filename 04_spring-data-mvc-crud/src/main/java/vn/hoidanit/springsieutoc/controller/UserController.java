@@ -78,12 +78,8 @@ public class UserController {
 
 	@PostMapping("/user/create")
 	public String getPostPage(@ModelAttribute User createUser, Model model) {
-		createUser.setId(1);
-
-		List<User> userList = Arrays.asList(createUser);
-		model.addAttribute("users", userList);
-
-		return "/user/show";
+		this._userService.createUser(createUser);
+		return "redirect:/user";
 	}
 
 	@GetMapping("/user/{id}")
