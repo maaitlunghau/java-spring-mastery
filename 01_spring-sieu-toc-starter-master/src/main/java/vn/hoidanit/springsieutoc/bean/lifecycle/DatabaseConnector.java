@@ -12,10 +12,11 @@
 package vn.hoidanit.springsieutoc.bean.lifecycle;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 
-//@Component
+@Component
 public class DatabaseConnector implements InitializingBean {
 
 	// Thuộc tính sẽ được thiết lập (DI) trước khi Custom Init được gọi

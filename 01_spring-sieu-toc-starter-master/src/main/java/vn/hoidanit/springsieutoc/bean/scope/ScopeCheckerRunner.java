@@ -13,8 +13,9 @@ package vn.hoidanit.springsieutoc.bean.scope;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
-//@Component // Đánh dấu đây là một Spring Bean
+@Component // Đánh dấu đây là một Spring Bean
 public class ScopeCheckerRunner implements CommandLineRunner {
 
 	// Spring tự động tiêm ApplicationContext vào lớp này (Giai đoạn 2)
