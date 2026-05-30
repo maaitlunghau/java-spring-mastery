@@ -145,7 +145,8 @@ MỐI QUAN HỆ:
 Cần phải có một Context đang chạy để có thể sử dụng bất kì Bean nào.
 
 
-
+6. JPA (Java Persistence API)
+- nhờ công cụ JPA thì mới có thể thao tác được với Database
 
 -------------------------
     NOTE: Quan trọng

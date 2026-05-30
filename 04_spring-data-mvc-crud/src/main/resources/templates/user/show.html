@@ -38,7 +38,7 @@
                         <a th:href="@{/user/{id}(id=${user.id})}" class="btn btn-warning">
                             Update
                         </a>
-                        <form method="post" th:action="@{/user/delete/{id}(id=${user.id})}">
+                        <form onsubmit="return confirm('Are you sure to delete this user?')" method="post" th:action="@{/user/delete/{id}(id=${user.id})}">
                             <button class="btn btn-danger" type="submit">
                                 Delete
                             </button>

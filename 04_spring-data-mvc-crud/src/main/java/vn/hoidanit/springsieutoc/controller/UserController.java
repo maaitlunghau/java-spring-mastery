@@ -11,12 +11,14 @@
 
 package vn.hoidanit.springsieutoc.controller;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +28,11 @@ import vn.hoidanit.springsieutoc.model.User;
 import vn.hoidanit.springsieutoc.service.UserService;
 
 @Controller // MVC
-public class HelloController {
+public class UserController {
 
 	private final UserService _userService;
 
-	public HelloController(UserService userService) {
+	public UserController(UserService userService) {
 		this._userService = userService;
 	}
 
@@ -77,47 +79,49 @@ public class HelloController {
 	}
 
 	@PostMapping("/user/create")
-	public String getPostPage(@ModelAttribute User createUser, Model model) {
-		createUser.setId(1);
+	public String getPostPage(@Valid @ModelAttribute User createUser, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "/user/create";
+		}
 
-		List<User> userList = Arrays.asList(createUser);
-		model.addAttribute("users", userList);
-
-		return "/user/show";
+		this._userService.createUser(createUser);
+		return "redirect:/user";
 	}
 
 	@GetMapping("/user/{id}")
 	public String getUpdateUserPage(Model model, @PathVariable int id) {
-		List<User> userList = this._userService.fetchUsers();
+		Optional<User> userOptional = this._userService.fetchUserById(id);
 
-		User updateUser = userList.stream().filter(user -> user.getId() == id)
-				.findFirst().get();
+		if (userOptional.isPresent()) {
+			model.addAttribute("user", userOptional.get());
+			model.addAttribute("id", id);
 
-		System.out.println(updateUser);
-
-		model.addAttribute("user", updateUser);
-		model.addAttribute("id", id);
-
-		return "/user/update";
+			return "/user/update";
+		} else {
+			return "redirect:/user";
+		}
 	}
 
 	@PostMapping("/user/update")
-	public String postUpdatePage(@ModelAttribute User updateUser, Model model) {
-		updateUser.setId(1);
+	public String postUpdatePage(@Valid @ModelAttribute User updateUser, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			System.out.println("ERROR!!!!!!");
 
-		List<User> userList = Arrays.asList(updateUser);
-		model.addAttribute("users", userList);
+			bindingResult.getAllErrors().forEach(error -> System.out.println(error.toString()));
 
-		return "/user/show";
+			model.addAttribute("user", updateUser);
+			model.addAttribute("id", updateUser.getId());
+
+			return "/user/update";
+		}
+
+		this._userService.updateUser(updateUser);
+		return "redirect:/user";
 	}
 
 	@PostMapping("/user/delete/{id}")
-	public String postDeleteUser(Model model, @PathVariable int id) {
-		List<User> userList = this._userService.fetchUsers();
-		List<User> newUserList = userList.stream().filter(user -> user.getId() != id)
-				.collect(Collectors.toList());
-		model.addAttribute("users", newUserList);
-
-		return "/user/show"; // hoặc redirect:/user
+	public String postDeleteUser(@PathVariable int id) {
+		this._userService.deleteUser(id);
+		return "redirect:/user";
 	}
 }
