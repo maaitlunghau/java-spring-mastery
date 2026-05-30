@@ -143,3 +143,14 @@ CHỨC NĂNG:
 MỐI QUAN HỆ:
 - Container (ApplicationContext) là nơi chứa tất cả các Bean và quản lý vòng đời của chúng. 
 Cần phải có một Context đang chạy để có thể sử dụng bất kì Bean nào.
+
+
+
+
+-------------------------
+    NOTE: Quan trọng
+-------------------------
+1. Chapter 3:
+- Nhấn mạnh về trọng tâm kiến thức của Java Spring
+- Khi nào học xong các Chapter khác mà vẫn còn một chút gì đó khó hiểu, hãy xem lại Chapter 3
+- Nếu như đã hiểu rồi, vẫn bắt buộc phải xem lại chapter 3 một lần nữa.
