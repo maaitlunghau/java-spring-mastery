@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,7 +79,11 @@ public class UserController {
 	}
 
 	@PostMapping("/user/create")
-	public String getPostPage(@ModelAttribute User createUser) {
+	public String getPostPage(@Valid @ModelAttribute User createUser, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "/user/create";
+		}
+
 		this._userService.createUser(createUser);
 		return "redirect:/user";
 	}
@@ -97,7 +103,18 @@ public class UserController {
 	}
 
 	@PostMapping("/user/update")
-	public String postUpdatePage(@ModelAttribute User updateUser) {
+	public String postUpdatePage(@Valid @ModelAttribute User updateUser, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			System.out.println("ERROR!!!!!!");
+
+			bindingResult.getAllErrors().forEach(error -> System.out.println(error.toString()));
+
+			model.addAttribute("user", updateUser);
+			model.addAttribute("id", updateUser.getId());
+
+			return "/user/update";
+		}
+
 		this._userService.updateUser(updateUser);
 		return "redirect:/user";
 	}

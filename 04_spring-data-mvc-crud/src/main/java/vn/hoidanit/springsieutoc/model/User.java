@@ -1,6 +1,7 @@
 package vn.hoidanit.springsieutoc.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users") // rename table name in database for this entity
@@ -9,10 +10,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    // lombok: thư viện generate ...
+    @NotBlank(message = "Name không được để trống!")
     private String name;
+    @NotBlank(message = "Name không được để trống!")
     private String email;
+    @NotBlank(message = "Name không được để trống!")
     private String password;
+    @NotBlank(message = "Name không được để trống!")
     private String address;
 
     public User() {
