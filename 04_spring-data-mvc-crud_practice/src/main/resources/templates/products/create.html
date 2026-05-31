@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+
+<div class="flex h-screen overflow-hidden">
+    <div class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800">
+            <span class="text-lg font-bold tracking-wider text-indigo-400">MST SOFTWARE</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <a th:href="@{/}" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+                Dashboard
+            </a>
+            <a th:href="@{/products}" class="flex items-center px-4 py-2.5 text-sm font-medium bg-gray-800 text-white rounded-lg">
+                Products System
+            </a>
+        </nav>
+    </div>
+
+    <div class="flex-1 flex flex-col overflow-y-auto">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center px-8">
+            <h1 class="text-xl font-semibold text-gray-800">Deployment Console</h1>
+        </header>
+
+        <main class="p-8 max-w-2xl w-full mx-auto">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-8">
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900">Add New Enterprise Product</h2>
+                    <p class="text-sm text-gray-500">Provide required entity definitions for system integration matching data models mapping specification.</p>
+                </div>
+
+                <form th:action="@{/product/create}" th:object="${product}" method="POST" onsubmit="localStorage.setItem('toast_msg', 'Successfully created new product catalog entry.');" class="space-y-5">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1.5">Product Identification Name</label>
+                        <input type="text" id="name" th:field="*{name}" placeholder="Enter specific product name..."
+                               th:class="*{#fields.hasErrors('name')} ? 'w-full px-4 py-2.5 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-200 bg-red-50 text-sm' : 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm'">
+                        <p class="mt-1.5 text-xs text-red-600 font-medium" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 mb-1.5">Unit Price ($)</label>
+                            <input type="number" step="0.01" id="price" th:field="*{price}" placeholder="0.00"
+                                   th:class="*{#fields.hasErrors('price')} ? 'w-full px-4 py-2.5 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-200 bg-red-50 text-sm' : 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm'">
+                            <p class="mt-1.5 text-xs text-red-600 font-medium" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+                        </div>
+
+                        <div>
+                            <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1.5">Stock Volume Quantity</label>
+                            <input type="number" id="quantity" th:field="*{quantity}" placeholder="0"
+                                   th:class="*{#fields.hasErrors('quantity')} ? 'w-full px-4 py-2.5 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-200 bg-red-50 text-sm' : 'w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm'">
+                            <p class="mt-1.5 text-xs text-red-600 font-medium" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100 flex items-center justify-end space-x-3">
+                        <a th:href="@{/products}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg transition-colors">
+                            Cancel
+                        </a>
+                        <button type="submit" class="px-5 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors shadow-sm">
+                            Complete Injection
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>

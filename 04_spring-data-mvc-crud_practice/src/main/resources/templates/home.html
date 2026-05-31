@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Product Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+
+<div class="flex h-screen overflow-hidden">
+    <div class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800">
+            <span class="text-lg font-bold tracking-wider text-indigo-400">MST SOFTWARE</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <a th:href="@{/}" class="flex items-center px-4 py-2.5 text-sm font-medium bg-gray-800 text-white rounded-lg">
+                Dashboard
+            </a>
+            <a th:href="@{/products}" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+                Products System
+            </a>
+        </nav>
+    </div>
+
+    <div class="flex-1 flex flex-col overflow-y-auto">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
+            <h1 class="text-xl font-semibold text-gray-800">Overview Dashboard</h1>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm text-gray-500">Welcome, Administrator</span>
+            </div>
+        </header>
+
+        <main class="p-8 max-w-7xl w-full mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-sm font-medium text-gray-500 truncate">Total Modules System</p>
+                    <p class="mt-2 text-3xl font-semibold text-gray-900">04</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-sm font-medium text-gray-500 truncate">Core Technology</p>
+                    <p class="mt-2 text-xl font-semibold text-indigo-600">Spring Data JPA</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                    <p class="text-sm font-medium text-gray-500 truncate">Template Engine</p>
+                    <p class="mt-2 text-xl font-semibold text-emerald-600">Thymeleaf & Tailwind</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-8 text-center">
+                <h2 class="text-lg font-semibold text-gray-800 mb-2">Welcome to Practice Project</h2>
+                <p class="text-gray-500 max-w-xl mx-auto mb-6 text-sm">Manage your product catalog seamlessly with secure backend validation, robust persistence Layer and optimal performance architectural design.</p>
+                <a th:href="@{/products}" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors shadow-sm">
+                    Access Products System Map
+                </a>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
