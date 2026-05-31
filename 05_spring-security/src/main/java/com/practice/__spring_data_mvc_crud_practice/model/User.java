@@ -22,14 +22,18 @@ public class User {
     @NotBlank(message = "Address is required")
     private String Address;
 
+    @NotBlank(message = "Role is required")
+    private String role;
+
     public User() {}
 
-    public User(int id, String name, String email, String password, String address) {
+    public User(int id, String name, String email, String password, String address, String role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        Address = address;
+        this.Address = address;
+        this.role = role;
     }
 
     public int getId() {
@@ -72,6 +76,14 @@ public class User {
         Address = address;
     }
 
+    public @NotBlank(message = "role is required") String getrole() {
+        return role;
+    }
+
+    public void setrole(@NotBlank(message = "role is required") String role) {
+        role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -80,6 +92,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", Address='" + Address + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
