@@ -22,7 +22,6 @@ public class User {
     @NotBlank(message = "Address is required")
     private String address;
 
-    @NotBlank(message = "Role is required")
     private String role;
 
     public User() {}
