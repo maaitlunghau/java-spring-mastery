@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Authorization Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans text-gray-900">
+
+<div class="flex h-screen overflow-hidden">
+    <div class="w-64 bg-gray-900 text-white flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800">
+            <span class="text-lg font-bold tracking-wider text-indigo-400">MST SOFTWARE</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <a th:href="@{/}" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+                Dashboard
+            </a>
+            <a th:href="@{/products}" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+                Products System
+            </a>
+            <a th:href="@{/users}" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+                Users System
+            </a>
+        </nav>
+    </div>
+
+    <div class="flex-1 flex flex-col overflow-y-auto">
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center px-8 justify-between">
+            <h1 class="text-xl font-semibold text-gray-800">Security Gate Console</h1>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs font-semibold px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200">
+                    Active Session
+                </span>
+            </div>
+        </header>
+
+        <main class="p-6 w-full">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 w-full">
+
+                <div class="mb-6 border-b border-gray-100 pb-5">
+                    <h2 class="text-lg font-semibold text-gray-900">Method Security Authorization Test</h2>
+                    <p class="text-sm text-gray-500">Verify context holders, endpoint interceptors, and method-level security mapping rules.</p>
+                </div>
+
+                <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start space-x-3 mb-6">
+                    <svg class="w-5 h-5 text-emerald-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    <div>
+                        <h3 class="text-sm font-semibold text-emerald-800">Spring Security Context Loaded</h3>
+                        <p class="text-xs text-emerald-600 mt-0.5">The HTTP filter chain successfully intercepted this request and verified the structural credentials matching target specifications.</p>
+                    </div>
+                </div>
+
+                <div class="overflow-hidden border border-gray-150 rounded-lg w-full">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="bg-gray-50 text-gray-500 text-left font-medium text-xs uppercase tracking-wider">
+                        <tr>
+                            <th class="px-6 py-3">Security Interceptor Target</th>
+                            <th class="px-6 py-3">Required Authority</th>
+                            <th class="px-6 py-3 text-right">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-gray-700">
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-xs text-indigo-600">@PreAuthorize("hasRole('USER')")</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-0.5 text-xs bg-gray-100 text-gray-800 rounded font-medium border border-gray-200">ROLE_USER</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="inline-flex items-center text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">Pass</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-mono text-xs text-indigo-600">@PreAuthorize("hasRole('ADMIN')")</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-0.5 text-xs bg-purple-50 text-purple-700 rounded font-medium border border-purple-100">ROLE_ADMIN</span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <span class="inline-flex items-center text-xs font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">Evaluating</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-100 flex justify-end">
+                    <a th:href="@{/}" class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors shadow-sm">
+                        Return to Control Dashboard
+                    </a>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
