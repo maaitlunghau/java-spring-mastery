@@ -4,15 +4,13 @@ import com.practice.__spring_data_mvc_crud_practice.service.ProductService;
 import com.practice.__spring_data_mvc_crud_practice.model.Product;
 
 import jakarta.validation.Valid;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,13 +23,25 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String index(Model model) {
-        List<Product> products = _productService.fetchAllProducts();
-        model.addAttribute("products", products);
+    public String index(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "8") int size,
+            Model model) {
+
+        Page<Product> productPage = (Page<Product>) _productService.fetchProductsWithSpec(keyword, page, size);
+
+        model.addAttribute("products", productPage.getContent());
+
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("totalItems", productPage.getTotalElements());
+        model.addAttribute("size", size);
 
         return "products/index";
     }
-    // 2. Trang giao diện tạo mới
+
     @GetMapping("/product/create")
     public String createPage(Model model) {
         model.addAttribute("product", new Product());

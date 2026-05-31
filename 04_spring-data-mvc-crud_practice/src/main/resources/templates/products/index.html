@@ -8,9 +8,11 @@
 </head>
 <body class="bg-gray-50 font-sans text-gray-900">
 
-<div id="toast" class="fixed top-5 right-5 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-500 ease-out">
+<div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-[100px] opacity-0 transition-all duration-500 ease-out">
     <div class="bg-emerald-600 text-white px-5 py-3 rounded-xl shadow-xl flex items-center space-x-3">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
         <span id="toast-message" class="text-sm font-medium">Action successfully processed!</span>
     </div>
 </div>
@@ -39,6 +41,21 @@
         </header>
 
         <main class="p-8 max-w-7xl w-full mx-auto">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5 mb-6">
+                <form th:action="@{/products}" method="GET" class="flex items-center space-x-3">
+                    <div class="relative w-80">
+                        <input type="text" name="keyword" th:value="${keyword}" placeholder="Search product name..."
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-colors">
+                    </div>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                        Search
+                    </button>
+                    <a th:href="@{/products}" class="px-5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg transition-colors">
+                        Reset
+                    </a>
+                </form>
+            </div>
+
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -54,10 +71,13 @@
                         <tbody class="divide-y divide-gray-100 text-sm">
                         <tr th:each="p : ${products}" class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 font-mono text-gray-400" th:text="${p.id}">1</td>
-                            <td class="px-6 py-4 font-medium text-gray-900" th:text="${p.name}">Product A</td>
+                            <td class="px-6 py-4 font-medium text-gray-900" th:text="${p.name}">Product Name</td>
                             <td class="px-6 py-4 text-gray-600" th:text="${'$' + #numbers.formatDecimal(p.price, 1, 2)}">$0.00</td>
                             <td class="px-6 py-4">
-                                <span th:text="${p.quantity}" th:class="${p.quantity > 0 ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800' : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'}">0</span>
+                                <span th:text="${p.quantity}"
+                                      th:class="${p.quantity > 0 ? 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800' : 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'}">
+                                    0
+                                </span>
                             </td>
                             <td class="px-6 py-4 text-right space-x-3">
                                 <a th:href="@{/product/update/{id}(id=${p.id})}" class="text-indigo-600 hover:text-indigo-900 font-medium transition-colors">Edit</a>
@@ -72,6 +92,32 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between" th:if="${totalPages > 0}">
+                    <span class="text-xs text-gray-500">
+                        Showing Page <strong th:text="${currentPage + 1}">1</strong> of <strong th:text="${totalPages}">1</strong>
+                        (<span th:text="${totalItems}">0</span> total products)
+                    </span>
+
+                    <div class="inline-flex space-x-1">
+                        <a th:href="@{/products(keyword=${keyword}, page=${currentPage - 1}, size=${size})}"
+                           th:class="${currentPage == 0} ? 'pointer-events-none opacity-50 px-3 py-1.5 border border-gray-300 text-xs font-medium rounded bg-white text-gray-400' : 'px-3 py-1.5 border border-gray-300 text-xs font-medium rounded bg-white text-gray-700 hover:bg-gray-50 transition-colors'">
+                            Previous
+                        </a>
+
+                        <span th:if="${totalPages > 1}" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a th:href="@{/products(keyword=${keyword}, page=${i}, size=${size})}"
+                               th:text="${i + 1}"
+                               th:class="${currentPage == i} ? 'px-3 py-1.5 border border-indigo-600 bg-indigo-600 text-white text-xs font-medium rounded' : 'px-3 py-1.5 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 text-xs font-medium rounded transition-colors'">
+                            </a>
+                        </span>
+
+                        <a th:href="@{/products(keyword=${keyword}, page=${currentPage + 1}, size=${size})}"
+                           th:class="${currentPage + 1 == totalPages} ? 'pointer-events-none opacity-50 px-3 py-1.5 border border-gray-300 text-xs font-medium rounded bg-white text-gray-400' : 'px-3 py-1.5 border border-gray-300 text-xs font-medium rounded bg-white text-gray-700 hover:bg-gray-50 transition-colors'">
+                            Next
+                        </a>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -83,7 +129,7 @@
             event.preventDefault();
             return false;
         }
-        localStorage.setItem('toast_msg', 'Product action execution completed successfully.');
+        localStorage.setItem('toast_msg', 'Product catalog deletion completed successfully.');
         return true;
     }
 
@@ -92,13 +138,17 @@
         if (storedMsg) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').innerText = storedMsg;
-            toast.classList.remove('translate-y-[-100px]', 'opacity-0');
+
+            // Animate Show Toast (Trượt mượt mà từ dưới màn hình lên)
+            toast.classList.remove('translate-y-[100px]', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
 
             localStorage.removeItem('toast_msg');
+
+            // Animate Hide Toast after 3 seconds (Trượt lùi xuống dưới màn hình để ẩn)
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-[-100px]', 'opacity-0');
+                toast.classList.add('translate-y-[100px]', 'opacity-0');
             }, 3000);
         }
     });
