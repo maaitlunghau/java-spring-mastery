@@ -1,12 +1,13 @@
-package vn.hoidanit.springsieutoc;
+package com.practice.__spring_data_mvc_crud_practice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringDataApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringDataApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
+
 }
