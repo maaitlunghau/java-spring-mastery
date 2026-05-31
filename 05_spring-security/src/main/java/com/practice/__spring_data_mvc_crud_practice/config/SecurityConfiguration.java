@@ -16,16 +16,34 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
+     /**
+      * Creates a BCrypt-based password encoder for hashing and verifying user passwords.
+      *
+      * @return a PasswordEncoder that uses BCrypt for password encoding and verification
+      */
      @Bean
      PasswordEncoder passwordEncoder() {
           return new BCryptPasswordEncoder();
      }
 
+     /**
+      * Creates a UserDetailsService backed by the application's UserService.
+      *
+      * @param userService the service used to load user data for authentication
+      * @return a UserDetailsService that loads user details from the provided UserService
+      */
      @Bean
      UserDetailsService userDetailsService(UserService userService) {
           return new CustomUserDetailsService(userService);
      }
 
+     /**
+      * Creates a DaoAuthenticationProvider wired with the given UserDetailsService and PasswordEncoder.
+      *
+      * @param userDetailsService the service used to load user-specific data during authentication
+      * @param passwordEncoder    the encoder used to verify user credentials
+      * @return the configured DaoAuthenticationProvider
+      */
      @Bean
      DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,
                PasswordEncoder passwordEncoder) {
@@ -35,6 +53,17 @@ public class SecurityConfiguration {
           return dao;
      }
 
+    /**
+     * Configure and build the application's HTTP security filter chain.
+     *
+     * Configures request authorization (permits "/", "/login", "/register"; requires role "ADMIN" for
+     * "/users", "/user/**", "/products", "/product/**"; requires authentication for all other requests),
+     * sets up form login with a custom login page ("/login"), success redirect ("/"), failure redirect
+     * ("/login?error"), and configures an access-denied page ("/access-deny").
+     *
+     * @param http the HttpSecurity builder used to configure the security filter chain
+     * @return the configured SecurityFilterChain
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

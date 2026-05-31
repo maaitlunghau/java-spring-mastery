@@ -10,6 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication()
 public class Application {
+	/**
+	 * Starts the Spring Boot application.
+	 *
+	 * @param args the command-line arguments passed to the application
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
