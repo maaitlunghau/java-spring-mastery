@@ -4,6 +4,7 @@ import com.practice.__spring_data_mvc_crud_practice.model.User;
 import com.practice.__spring_data_mvc_crud_practice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -85,5 +86,11 @@ public class UserController {
     public String deleteUser(@PathVariable int id) {
         this._userService.deleteUser(id);
         return "redirect:/users";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/test-authorize")
+    public String testAuthorize() {
+        return "/test/test-authorize";
     }
 }

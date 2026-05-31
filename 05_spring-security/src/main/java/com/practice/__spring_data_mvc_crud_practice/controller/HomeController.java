@@ -26,6 +26,11 @@ public class HomeController {
         return "auth/home";
     }
 
+    @GetMapping("/access-deny")
+    public String accessDeny() {
+        return "/auth/access-deny";
+    }
+
      @GetMapping("/login")
      public String login() {
         return "auth/login";
