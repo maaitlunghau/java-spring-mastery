@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.practice.__spring_security_practice.models.OnCreate;
+import com.practice.__spring_security_practice.models.OnUpdate;
 import com.practice.__spring_security_practice.models.User;
 import com.practice.__spring_security_practice.services.UserService;
 
@@ -52,14 +56,17 @@ public class UserController {
         return "user/create";
     }
 
-    @GetMapping("/users/update")
-    public String update() {
+    @GetMapping("/users/update/{id}")
+    public String update(Model model, @PathVariable int id) {
+        User userUpdate = this._userService.getUserById(id).get();
+
+        model.addAttribute("user", userUpdate);
         return "user/update";
     }
 
     // create
     @PostMapping("/users/create")
-    public String createUser(@Valid @ModelAttribute User createUser, BindingResult bindingResult) {
+    public String createUser(@Validated(OnCreate.class) @ModelAttribute User createUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "user/create";
 
@@ -68,6 +75,26 @@ public class UserController {
     }
 
     // update
+    @PostMapping("/users/update/{id}")
+    public String updateUser(@Validated(OnUpdate.class) @ModelAttribute User updateUser, BindingResult bindingResult,
+            @PathVariable int id) {
+        if (bindingResult.hasErrors())
+            return "user/update";
+
+        User existingUser = this._userService.getUserById(id).get();
+
+        existingUser.setName(updateUser.getName());
+        existingUser.setEmail(updateUser.getEmail());
+        existingUser.setAddress(updateUser.getAddress());
+        existingUser.setRole(updateUser.getRole());
+
+        if (updateUser.getPassword() != null && !updateUser.getPassword().isEmpty()) {
+            existingUser.setPassword(updateUser.getPassword());
+        }
+
+        this._userService.updateUser(existingUser);
+        return "redirect:/users";
+    }
 
     // delete
 }
