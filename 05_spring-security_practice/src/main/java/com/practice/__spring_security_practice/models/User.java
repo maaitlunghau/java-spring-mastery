@@ -10,21 +10,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name is required", groups = { OnCreate.class, OnUpdate.class })
     private String name;
 
-    @NotBlank(message = "Email is required")
+    @NotBlank(message = "Email is required", groups = { OnCreate.class, OnUpdate.class })
     private String email;
 
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "Password is required", groups = { OnCreate.class })
     private String password;
 
-    @NotBlank(message = "Address is required")
+    @NotBlank(message = "Address is required", groups = { OnCreate.class, OnUpdate.class })
     private String address;
 
+    @NotBlank(message = "Role is required", groups = { OnCreate.class, OnUpdate.class })
     private String role;
 
-    public User() {}
+    public User() {
+    }
 
     public User(int id, String name, String email, String password, String address, String role) {
         this.id = id;
