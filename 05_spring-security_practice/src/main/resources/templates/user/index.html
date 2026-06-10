@@ -86,7 +86,7 @@
                                     <td class="px-6 py-4 text-gray-600" th:text="${u.role}">ROLE_USER</td>
                                     <td class="px-6 py-4 text-gray-600" th:text="${u.address}">Viet Nam</td>
                                     <td class="px-6 py-4 text-right space-x-3">
-                                        <a th:href="@{/user/update/{id}(id=${u.id})}"
+                                        <a th:href="@{/users/update/{id}(id=${u.id})}"
                                             class="text-indigo-600 hover:text-indigo-900 font-medium transition-colors">Edit</a>
                                         <form th:action="@{/user/delete/{id}(id=${u.id})}" method="POST"
                                             class="inline-block"
