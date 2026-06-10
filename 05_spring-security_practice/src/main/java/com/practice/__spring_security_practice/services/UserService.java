@@ -1,6 +1,7 @@
 package com.practice.__spring_security_practice.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this._userRepository.findAll();
+    }
+
+    public Optional<User> getUserById(int id) {
+        return this._userRepository.findById(id);
     }
 
     public void createUser(User user) {
